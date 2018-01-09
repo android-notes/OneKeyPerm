@@ -39,12 +39,12 @@ class Check {
     }
 
     private static void throwException(String packName) {
-        String definePerm = " <permission\n" +
-                "        android:name=\"com.wanjian.permission.demo.permission.ONE_KEY_PERM\"\n" +
-                "        android:protectionLevel=\"signature\" />".replace("com.wanjian.permission.demo", packName);
+        String definePerm = (" <permission\n" +
+                "        android:name=\"$.permission.ONE_KEY_PERM\"\n" +
+                "        android:protectionLevel=\"signature\" />").replace("$", packName);
 
 
-        String usePerm = " <uses-permission android:name=\"com.wanjian.permission.demo.permission.ONE_KEY_PERM\" />\n".replace("com.wanjian.permission.demo", packName);
+        String usePerm = " <uses-permission android:name=\"$.permission.ONE_KEY_PERM\" />\n".replace("$", packName);
 
         throw new RuntimeException("define and use permission in your manifest ! \nexample:\n".concat(definePerm).concat("\n").concat(usePerm));
     }
