@@ -11,8 +11,7 @@ OneKeyPerm不依赖任何业务Activity，支持多进程，只需一句静态�
 ```java
 申请权限被拒绝后 不会 自动开启设置页面让用户手动开启权限
 
-OneKeyPerm.request(Manifest.permission.CAMERA, "需要使用相机权限"
-                , new OneKeyPerm.OnPermResultListener() {
+OneKeyPerm.request(Manifest.permission.CAMERA, "您需要允许相机权限，否则无法使用扫码功能", new OneKeyPerm.OnPermResultListener() {
                     @Override
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(MainActivity.this, "请求相机权限 " + isGrant, Toast.LENGTH_SHORT).show();
@@ -25,8 +24,7 @@ OneKeyPerm.request(Manifest.permission.CAMERA, "需要使用相机权限"
 ```java
 申请权限被拒绝后 会 自动开启设置页面让用户手动开启权限
 
-OneKeyPerm.request(Manifest.permission.CAMERA, "需要使用相机权限"
-                , new OneKeyPerm.OnPermResultListener() {
+OneKeyPerm.request(Manifest.permission.CAMERA, "您需要允许相机权限，否则无法使用扫码功能", new OneKeyPerm.OnPermResultListener() {
                     @Override
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(MainActivity.this, "请求相机权限 " + isGrant, Toast.LENGTH_SHORT).show();
