@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import static com.wanjian.permission.OneKeyPerm.BROADCAST_PERM;
 import static com.wanjian.permission.OneKeyPerm.ONE_KEY_PERM;
 import static com.wanjian.permission.OneKeyPerm.ONE_KEY_PERM_MANU;
+import static com.wanjian.permission.OneKeyPerm.TIPS;
 
 /**
  * Created by wanjian on 2018/1/10.
@@ -25,11 +27,12 @@ public class WatchAuthorizationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        perm = getIntent().getStringExtra(ONE_KEY_PERM);
-        request();
+        Intent intent = getIntent();
+        perm = intent.getStringExtra(ONE_KEY_PERM);
+        request(intent.getStringExtra(TIPS));
     }
 
-    private void request() {
+    private void request(String tips) {
         if (TextUtils.isEmpty(perm)) {
             finish();
             return;
@@ -38,6 +41,10 @@ public class WatchAuthorizationActivity extends AppCompatActivity {
             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.fromParts("package", getPackageName(), null));
             startActivityForResult(intent, REQUEST);
+
+            if (TextUtils.isEmpty(tips) == false) {
+                Toast.makeText(this, tips, Toast.LENGTH_LONG).show();
+            }
         } catch (Exception e) {
             onResult();
         }

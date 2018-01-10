@@ -72,13 +72,13 @@ public class OneKeyPerm {
         sContext.startActivity(intent);
     }
 
-    public static void request(final String permission, String tips, final OnPermResultListener listener, boolean manualuthorize) {
+    public static void request(final String permission, final String tips, final OnPermResultListener listener, boolean manualuthorize) {
         if (manualuthorize) {
             request(permission, tips, new OnPermResultListener() {
                 @Override
                 public void onPermResult(String perm, boolean isGrant) {
                     if (!isGrant) {
-                        watchAuthorization(listener, perm);
+                        watchAuthorization(listener, tips, perm);
                     } else if (listener != null) {
                         listener.onPermResult(perm, isGrant);
                     }
@@ -89,7 +89,7 @@ public class OneKeyPerm {
         }
     }
 
-    private static void watchAuthorization(final OnPermResultListener listener, final String permission) {
+    private static void watchAuthorization(final OnPermResultListener listener, String tips, final String permission) {
         String filter = ONE_KEY_PERM_MANU + "/" + permission;
         sContext.registerReceiver(new BroadcastReceiver() {
             @Override
@@ -106,6 +106,7 @@ public class OneKeyPerm {
 
         Intent intent = new Intent(sContext, WatchAuthorizationActivity.class);
         intent.putExtra(ONE_KEY_PERM, permission);
+        intent.putExtra(TIPS, tips);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         sContext.startActivity(intent);
     }
