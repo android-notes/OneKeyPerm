@@ -17,6 +17,7 @@ public class OneKeyPerm {
 
     static final String TIPS = "tips";
     static String ONE_KEY_PERM;
+    static String ONE_KEY_PERM_MANU;
     static String BROADCAST_PERM;
     private static Context sContext;
 
@@ -27,6 +28,7 @@ public class OneKeyPerm {
         sContext = application.getApplicationContext();
         Check.hasDefinePermission(sContext);
         ONE_KEY_PERM = sContext.getPackageName() + "/" + OneKeyPerm.class.getName();
+        ONE_KEY_PERM_MANU = ONE_KEY_PERM + "/manu/";
         BROADCAST_PERM = sContext.getPackageName() + ".permission.ONE_KEY_PERM";
     }
 
@@ -66,6 +68,44 @@ public class OneKeyPerm {
         Intent intent = new Intent(sContext, PermissionActivity.class);
         intent.putExtra(ONE_KEY_PERM, permission);
         intent.putExtra(TIPS, tips);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        sContext.startActivity(intent);
+    }
+
+    public static void request(final String permission, String tips, final OnPermResultListener listener, boolean manualuthorize) {
+        if (manualuthorize) {
+            request(permission, tips, new OnPermResultListener() {
+                @Override
+                public void onPermResult(String perm, boolean isGrant) {
+                    if (!isGrant) {
+                        watchAuthorization(listener, perm);
+                    } else if (listener != null) {
+                        listener.onPermResult(perm, isGrant);
+                    }
+                }
+            });
+        } else {
+            request(permission, tips, listener);
+        }
+    }
+
+    private static void watchAuthorization(final OnPermResultListener listener, final String permission) {
+        String filter = ONE_KEY_PERM_MANU + "/" + permission;
+        sContext.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                sContext.unregisterReceiver(this);
+                if (listener != null) {
+                    int result = intent.getIntExtra(permission, 1);
+                    if (result == PackageManager.PERMISSION_GRANTED || result == PackageManager.PERMISSION_DENIED) {
+                        listener.onPermResult(permission, result == PackageManager.PERMISSION_GRANTED);
+                    }
+                }
+            }
+        }, new IntentFilter(filter), BROADCAST_PERM, null);
+
+        Intent intent = new Intent(sContext, WatchAuthorizationActivity.class);
+        intent.putExtra(ONE_KEY_PERM, permission);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         sContext.startActivity(intent);
     }

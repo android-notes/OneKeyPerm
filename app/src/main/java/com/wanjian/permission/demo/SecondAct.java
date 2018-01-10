@@ -33,7 +33,7 @@ public class SecondAct extends Activity {
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(SecondAct.this, "请求读取权限 " + isGrant, Toast.LENGTH_SHORT).show();
                     }
-                });
+                },true);
             }
         });
         ((TextView) findViewById(R.id.tv)).setText(processName() + " " + android.os.Process.myPid());

@@ -61,7 +61,7 @@ public class PermissionActivity extends AppCompatActivity {
         } else {
             Intent result = new Intent(ONE_KEY_PERM + "/" + perm);
             result.putExtra(perm, PackageManager.PERMISSION_GRANTED);
-            intent.setPackage(getPackageName());
+            result.setPackage(getPackageName());
             sendBroadcast(result, BROADCAST_PERM);
             finish();
         }

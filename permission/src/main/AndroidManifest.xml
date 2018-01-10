@@ -7,6 +7,9 @@
             android:theme="@style/OneKeyPermTransparent">
 
         </activity>
+        <activity
+            android:name=".WatchAuthorizationActivity"
+            android:theme="@style/OneKeyPermTransparent" />
 
     </application>
 

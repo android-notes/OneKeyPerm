@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(MainActivity.this, "请求相机权限 " + isGrant, Toast.LENGTH_SHORT).show();
                     }
-                });
+                },true);
             }
         });
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(MainActivity.this, "请求读取权限 " + isGrant, Toast.LENGTH_SHORT).show();
                     }
-                });
+                },true);
             }
         });
 
