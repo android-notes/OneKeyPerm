@@ -14,15 +14,16 @@ import static android.content.pm.PermissionInfo.PROTECTION_SIGNATURE;
 
 class Check {
     static void hasDefinePermission(Context context) {
-        String packName = context.getPackageName();
         try {
+            String packName = context.getPackageName();
             String perm = packName.concat(".permission.ONE_KEY_PERM");
             PackageManager pm = context.getPackageManager();
 
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_PERMISSIONS);
 
             if (pi.permissions == null) {
-                throwException(packName);
+                log(packName);
+                return;
             }
             for (PermissionInfo permission : pi.permissions) {
                 if (perm.equals(permission.name)
@@ -31,14 +32,15 @@ class Check {
                     return;
                 }
             }
-            throwException(packName);
-        } catch (PackageManager.NameNotFoundException e) {
+            log(packName);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
     }
 
-    private static void throwException(String packName) {
+    private static void log(String packName) {
         String definePerm = (" <permission\n" +
                 "        android:name=\"$.permission.ONE_KEY_PERM\"\n" +
                 "        android:protectionLevel=\"signature\" />").replace("$", packName);
@@ -46,6 +48,6 @@ class Check {
 
         String usePerm = " <uses-permission android:name=\"$.permission.ONE_KEY_PERM\" />\n".replace("$", packName);
 
-        throw new RuntimeException("define and use permission in your manifest ! \nexample:\n".concat(definePerm).concat("\n").concat(usePerm));
+        new RuntimeException("define and use permission in your manifest ! \nexample:\n".concat(definePerm).concat("\n").concat(usePerm)).printStackTrace();
     }
 }

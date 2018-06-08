@@ -21,5 +21,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26+'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation project(':permission')
+//    implementation project(':permission')
+//    https://jcenter.bintray.com/com/wanjian/onekeyperm/0.0.1/
+    compile 'com.wanjian:onekeyperm:0.0.3'
 }

@@ -42,7 +42,7 @@ buildscript {
 publish {
     groupId = 'com.wanjian'
     artifactId = 'onekeyperm'
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.3'
     desc = '一键申请Android权限，不依赖任何业务Activity。小巧、简约、强悍'
     website = 'https://github.com/android-notes/OneKeyPerm'
 
