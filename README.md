@@ -4,7 +4,7 @@
 
 ### OneKeyPerm接入说明
 
-` compile 'com.wanjian:onekeyperm:0.0.1' `
+` compile 'com.wanjian:onekeyperm:0.0.3' `
  
  
 OneKeyPerm不依赖任何业务Activity，支持多进程，只需一句静态代码就可以了
