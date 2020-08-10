@@ -4,6 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcel;
+import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -12,8 +15,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
-import static com.wanjian.permission.OneKeyPerm.BROADCAST_PERM;
 import static com.wanjian.permission.OneKeyPerm.ONE_KEY_PERM;
+import static com.wanjian.permission.OneKeyPerm.RECEIVER;
 import static com.wanjian.permission.OneKeyPerm.TIPS;
 
 
@@ -23,16 +26,21 @@ import static com.wanjian.permission.OneKeyPerm.TIPS;
 
 public class PermissionActivity extends AppCompatActivity {
     private final int REQUEST_CODE = 1;
-
+    private IBinder receiver;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            receiver = bundle.getBinder(RECEIVER);
+        }
         final String perm = intent.getStringExtra(ONE_KEY_PERM);
-        if (TextUtils.isEmpty(perm)) {
+        if (TextUtils.isEmpty(perm) || receiver == null) {
             finish();
             return;
         }
+
         if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED) {
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, perm)) {
@@ -59,14 +67,10 @@ public class PermissionActivity extends AppCompatActivity {
                 // result of the request.
             }
         } else {
-            Intent result = new Intent(ONE_KEY_PERM + "/" + perm);
-            result.putExtra(perm, PackageManager.PERMISSION_GRANTED);
-            result.setPackage(getPackageName());
-            sendBroadcast(result, BROADCAST_PERM);
+            setResult(perm,PackageManager.PERMISSION_GRANTED);
             finish();
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -78,11 +82,7 @@ public class PermissionActivity extends AppCompatActivity {
 
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
-                    Intent intent = new Intent(ONE_KEY_PERM + "/" + permissions[0]);
-                    intent.putExtra(permissions[0], grantResults[0]);
-                    intent.setPackage(getPackageName());
-                    sendBroadcast(intent, BROADCAST_PERM);
+                    setResult(permissions[0], grantResults[0]);
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -90,6 +90,17 @@ public class PermissionActivity extends AppCompatActivity {
                 finish();
             }
 
+        }
+    }
+
+    private void setResult(String perm, int result) {
+        Parcel parcel = Parcel.obtain();
+        parcel.writeString(perm);
+        parcel.writeInt(result);
+        try {
+            receiver.transact(0, parcel, Parcel.obtain(), IBinder.FLAG_ONEWAY);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
         }
     }
 

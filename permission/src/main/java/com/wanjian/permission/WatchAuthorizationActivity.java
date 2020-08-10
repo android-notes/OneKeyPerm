@@ -3,6 +3,9 @@ package com.wanjian.permission;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Parcel;
+import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -10,9 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import static com.wanjian.permission.OneKeyPerm.BROADCAST_PERM;
 import static com.wanjian.permission.OneKeyPerm.ONE_KEY_PERM;
-import static com.wanjian.permission.OneKeyPerm.ONE_KEY_PERM_MANU;
+import static com.wanjian.permission.OneKeyPerm.RECEIVER;
 import static com.wanjian.permission.OneKeyPerm.TIPS;
 
 /**
@@ -61,11 +63,16 @@ public class WatchAuthorizationActivity extends AppCompatActivity {
 
 
     private void onResult() {
-        int permState = ContextCompat.checkSelfPermission(this, perm);
-        Intent result = new Intent(ONE_KEY_PERM_MANU + "/" + perm);
-        result.putExtra(perm, permState);
-        result.setPackage(getPackageName());
-        sendBroadcast(result, BROADCAST_PERM);
+        IBinder receiver = getIntent().getExtras().getBinder(RECEIVER);
+        int result = ContextCompat.checkSelfPermission(this, perm);
+        Parcel parcel = Parcel.obtain();
+        parcel.writeString(perm);
+        parcel.writeInt(result);
+        try {
+            receiver.transact(0, parcel, Parcel.obtain(), IBinder.FLAG_ONEWAY);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         finish();
         overridePendingTransition(0, 0);
     }

@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/OneKeyPerm.iml" filepath="$PROJECT_DIR$/OneKeyPerm.iml" group="OneKeyPerm" />
+      <module fileurl="file://$PROJECT_DIR$/app/OneKeyPerm-app.iml" filepath="$PROJECT_DIR$/app/OneKeyPerm-app.iml" group="OneKeyPerm/app" />
+      <module fileurl="file://$PROJECT_DIR$/permission/OneKeyPerm-permission.iml" filepath="$PROJECT_DIR$/permission/OneKeyPerm-permission.iml" group="OneKeyPerm/permission" />
       <module fileurl="file://$PROJECT_DIR$/Permission.iml" filepath="$PROJECT_DIR$/Permission.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/permission/permission.iml" filepath="$PROJECT_DIR$/permission/permission.iml" />

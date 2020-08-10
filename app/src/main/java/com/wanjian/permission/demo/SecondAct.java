@@ -28,7 +28,7 @@ public class SecondAct extends Activity {
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OneKeyPerm.request(Manifest.permission.READ_EXTERNAL_STORAGE, "需要读取文件", new OneKeyPerm.OnPermResultListener() {
+                OneKeyPerm.request(getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE, "需要读取文件", new OneKeyPerm.OnPermResultListener() {
                     @Override
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(SecondAct.this, "请求读取权限 " + isGrant, Toast.LENGTH_SHORT).show();

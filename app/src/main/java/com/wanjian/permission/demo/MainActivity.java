@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OneKeyPerm.request(Manifest.permission.CAMERA, "您需要允许相机权限，否则无法使用扫码功能", new OneKeyPerm.OnPermResultListener() {
+                OneKeyPerm.request(getApplication(), Manifest.permission.CAMERA, "您需要允许相机权限，否则无法使用扫码功能", new OneKeyPerm.OnPermResultListener() {
                     @Override
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(MainActivity.this, "请求相机权限 " + isGrant, Toast.LENGTH_SHORT).show();
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OneKeyPerm.request(Manifest.permission.READ_EXTERNAL_STORAGE, "您需要允许读取文件权限，否则无法查看图片", new OneKeyPerm.OnPermResultListener() {
+                OneKeyPerm.request(getApplication(), Manifest.permission.READ_EXTERNAL_STORAGE, "您需要允许读取文件权限，否则无法查看图片", new OneKeyPerm.OnPermResultListener() {
                     @Override
                     public void onPermResult(String perm, boolean isGrant) {
                         Toast.makeText(MainActivity.this, "请求读取权限 " + isGrant, Toast.LENGTH_SHORT).show();

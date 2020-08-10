@@ -2,14 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.wanjian.permission.demo">
 
-    <!--permission中com.wanjian.permission.demo替换成你的包名-->
-    <permission
-        android:name="com.wanjian.permission.demo.permission.ONE_KEY_PERM"
-        android:protectionLevel="signature" />
-
-    <!--uses-permission中com.wanjian.permission.demo替换成你的包名-->
-    <uses-permission android:name="com.wanjian.permission.demo.permission.ONE_KEY_PERM" />
-
     <uses-permission android:name="android.permission.CAMERA"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
 
