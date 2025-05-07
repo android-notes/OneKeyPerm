@@ -1,11 +1,10 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'//添加
 android {
-    compileSdkVersion 26
+    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 18
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -32,23 +31,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.1'
-        classpath 'com.novoda:bintray-release:0.8.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
 
-
-//添加  先执行 generatePomFileForReleasePublication和publishReleasePublicationToMabenLocal，再执行bintrayUpload。在publishing下
-publish {
-    groupId = 'com.wanjian'
-    artifactId = 'onekeyperm'
-    publishVersion = '0.0.3'
-    desc = '一键申请Android权限，不依赖任何业务Activity。小巧、简约、强悍'
-    website = 'https://github.com/android-notes/OneKeyPerm'
-
-    bintrayUser = 'wanjian' // 账户名
-    bintrayKey = '...' // 就是API key
-    dryRun = false
-
-}

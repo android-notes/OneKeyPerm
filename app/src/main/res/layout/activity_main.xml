@@ -30,6 +30,35 @@
         android:text="主进程 请求文件读取权限" />
 
     <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="主进程 后台 请求相机权限" />
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="主进程 后台 请求文件读取权限" />
+
+    <Button
+        android:id="@+id/btn5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="主进程 销毁后 请求相机权限" />
+
+    <Button
+        android:id="@+id/btn6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="主进程 销毁后 请求文件读取权限" />
+
+
+    <Button
         android:id="@+id/newAct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
